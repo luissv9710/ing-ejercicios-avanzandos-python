@@ -11,33 +11,58 @@
 
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
+df_sales = pd.read_csv("smartphone_sales.csv")
+
 # 1. Gráfico de línea
-plt.plot([1, 2, 4, 5], [1, 3, 4, 3], '-o')
-plt.title('Tendencia de valores')
-plt.xlabel('Eje X')
-plt.ylabel('Eje Y')
+plt.figure(figsize=(10,5))
+plt.plot(df_sales['Quarter'], df_sales['Apple'], '-o', label='Apple', color='green')
+plt.title('Tendencia de Ventas de Apple por Trimestre')
+plt.xlabel('Trimestre')
+plt.ylabel('Ventas (en miles de unidades)')
 plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
 plt.show()
+
 
 # 2. Barras verticales
-plt.bar(['A', 'B', 'C'], [10, 20, 15])
-plt.title('Ventas por producto')
-plt.xlabel('Producto')
-plt.ylabel('Ventas')
+trimestre_especifico = df_sales[df_sales['Quarter'] == '4Q16'].iloc[0]
+marcas = ['Apple', 'Samsung', 'Huawei', 'Xiaomi', 'OPPO']
+ventas = [trimestre_especifico[m] for m in marcas]
+
+# Gráfica de barras verticales
+plt.figure(figsize=(8,5))
+plt.bar(marcas, ventas, color='steelblue')
+plt.title('Ventas por Marca - Trimestre 4Q16')
+plt.xlabel('Marca')
+plt.ylabel('Ventas (en miles de unidades)')
+plt.tight_layout()
 plt.show()
+
+
+
 
 # 3. Barras horizontales
-plt.barh(['Producto A', 'Producto B', 'Producto C', 'Producto D'], [100, 150, 130, 160])
-plt.title('Ingresos por producto')
-plt.xlabel('Ingresos')
-plt.ylabel('Producto')
+# Promedio de ventas por marca
+promedios = df_sales[marcas].mean()
+
+# Gráfica de barras horizontales
+plt.figure(figsize=(8,5))
+plt.barh(marcas, promedios, color='darkorange')
+plt.title('Promedio de Ventas por Marca')
+plt.xlabel('Ventas promedio por trimestre')
+plt.ylabel('Marca')
+plt.tight_layout()
 plt.show()
 
+
+
 # 4. Gráfico de pastel
-plt.pie([40, 35, 25], labels=['A', 'B', 'C'], autopct='%1.1f%%')
-plt.title('Distribución de mercado')
+plt.pie([15, 28, 32, 8, 17], labels=['Apple', 'Huawei', 'Samsung', 'Oppo', 'Xiaomi'], autopct='%1.1f%%')
+plt.title('Distribución de marcas')
 plt.show()
 
 # 5. Histograma de distribución
@@ -51,7 +76,7 @@ plt.show()
 # 6. Boxplot
 data = [7, 15, 14, 10, 10, 12, 20]
 plt.boxplot(data)
-plt.title('Distribución de datos')
+plt.title('Distribución de ventas (smarphones)')
 plt.ylabel('Valores')
 plt.show()
 
@@ -59,9 +84,9 @@ plt.show()
 x = [5, 7, 8, 7, 2, 17, 2, 9, 6, 10, 7, 9]
 y = [99, 86, 87, 88, 100, 86, 103, 87, 79, 110, 87, 96]
 plt.scatter(x, y)
-plt.title('Relación entre X e Y')
-plt.xlabel('X')
-plt.ylabel('Y')
+plt.title('Relación entre smartphone y ventas')
+plt.xlabel('Smartphone')
+plt.ylabel('Ventas')
 plt.show()
 
 # 8. Gráfico de burbujas
@@ -70,8 +95,8 @@ y = [100, 200, 300, 150, 100, 200, 145]
 z = [15, 25, 35, 45, 55, 65, 75]
 plt.scatter(x, y, s=[i * 10 for i in z], alpha=0.5)
 plt.title('Gráfico de burbujas')
-plt.xlabel('Eje X')
-plt.ylabel('Eje Y')
+plt.xlabel('Smartphone')
+plt.ylabel('Ventas')
 plt.show()
 
 # 9. Gráfico de radar
@@ -88,11 +113,11 @@ plt.title('Desempeño del empleado')
 plt.show()
 
 # 10. Barras apiladas
-days = ['Lun', 'Mar', 'Mié']
-smokers = [10, 12, 14]
-non_smokers = [20, 22, 24]
-plt.bar(days, smokers, label='Fumadores')
-plt.bar(days, non_smokers, bottom=smokers, label='No fumadores')
+days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie']
+clients = [10, 12, 14, 25, 18]
+non_clients = [20, 22, 24, 26, 50]
+plt.bar(days, clients, label='Clientes')
+plt.bar(days, non_clients, bottom=clients, label='Prospectos')
 plt.title('Ventas por día y tipo de cliente')
 plt.ylabel('Ventas')
 plt.legend()
@@ -103,9 +128,9 @@ x = [1, 2, 3, 4]
 y1 = [2, 4, 5, 8]
 y2 = [1, 5, 4, 2]
 plt.stackplot(x, y1, y2, labels=['Serie A', 'Serie B'])
-plt.title('Áreas apiladas')
-plt.xlabel('Periodo')
-plt.ylabel('Valor')
+plt.title('Áreas ventas')
+plt.xlabel('Smartphone')
+plt.ylabel('Ventas')
 plt.legend()
 plt.show()
 
